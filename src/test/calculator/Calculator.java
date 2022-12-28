@@ -11,16 +11,16 @@ public class Calculator {
 	 * 4. else, switch case 사용 금지
 	 * 5. 함수 인자는 최대 3개
 	 */
-	public static int splitAndSum(String text) {
+	public static int splitAndSum(String text){
 		
 		if(isBlank(text) == true) {
 			return 0;
 		}
 		
-		return sum(toInts(split(text)));
+		return sum(toPositives(split(text)));
 	}
 	
-	public static boolean isBlank(String text) {
+	private static boolean isBlank(String text) {
 		return text == null || text.isEmpty();
 	}
 	
@@ -28,19 +28,20 @@ public class Calculator {
 		return text.split(SEPARATOR_REGEX);
 	}
 	
-	public static int[] toInts(String[] values) {
-		int[] numbers = new int[values.length];
+	private static Positive[] toPositives(String[] values){
+		Positive[] numbers = new Positive[values.length];
 		for(int i = 0; i<values.length ; i++) {
-			 numbers[i] = Integer.parseInt(values[i]);
+			 numbers[i] = new Positive(values[i]);
 		}
 		return numbers;
 	}
-
-	public static int sum(int[] values) {
-		int result = 0;
-		for(int value : values) {
-			result += value;
+	
+	private static int sum(Positive[] values) {
+		Positive result = new Positive(0);
+		
+		for(Positive value : values) {
+			result = result.add(value);
 		}
-		return result;
+		return result.getNumber();
 	}
 }

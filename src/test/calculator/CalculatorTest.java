@@ -1,12 +1,20 @@
 package test.calculator;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.*;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 class CalculatorTest {
 
+	@Test
+	public void 음수값() {
+		assertThrows(RuntimeException.class, () -> {
+			Calculator.splitAndSum("-1,2,3");
+		});
+	}
+	
 	@Test
 	public void null_또는_빈값() {
 		assertThat(Calculator.splitAndSum(null),equalTo(0));
@@ -27,5 +35,6 @@ class CalculatorTest {
 	public void 쉼표_콜론_구분자() {
 		assertThat(Calculator.splitAndSum("1,2:3"),equalTo(6));
 	}
+	
 
 }
