@@ -1,9 +1,9 @@
-package test.oop9.role5;
+package test.oop9.role6;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class 줄여쓰지_않는다 {
+public class 모든_엔티티를_작게_유지한다 {
 
 	public static void main(String[] args) {
 		Holjjak h = new Holjjak();
