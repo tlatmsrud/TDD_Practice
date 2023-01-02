@@ -23,12 +23,13 @@ class Holjjak{
 		
 		Scanner in = new Scanner(System.in);
 		InputValue inputValue = null;
+		HoljjakScore score = new HoljjakScore();
 		
 		while((inputValue = new InputValue(in)).inputCheck()) {
 			RandomNumber randomNumber = new RandomNumber();
-			holjjakCheck(inputValue, randomNumber);
+			score.addResult(holjjakCheck(inputValue, randomNumber));
 		}
-		
+		score.printScoreInfo();
 		in.close();
 	}
 	
@@ -36,15 +37,16 @@ class Holjjak{
 	 * @title 홀짝 체크
 	 * @desc 난수에 대한 홀짝을 추출하고, 입력값과 비교하여 최종 홀짝 여부를 판단한다 
 	 */
-	public void holjjakCheck(InputValue inputValue, RandomNumber randomNumber) {
+	public boolean holjjakCheck(InputValue inputValue, RandomNumber randomNumber) {
 		int input = inputValue.getInputValue();
 
 		if(input == randomNumber.getHoljjak()) {
 			System.out.println("개수는 "+ randomNumber.getRandomNumber() +"! 맞췄습니다.");
-			return;
+			return true;
 		}
 		
 		System.out.println("개수는 "+ randomNumber.getRandomNumber() +"! 틀렸습니다.");
+		return false;
 	}
 }
 
@@ -109,6 +111,11 @@ class RandomNumber{
 	}
 }
 
+/**
+ * @title 홀짝 결과 클래스
+ * @desc 홀짝 결과를 관리하는 일급 컬렉션
+ *
+ */
 class HoljjakScore{
 	
 	List<Boolean> scoreBoard;
@@ -117,17 +124,20 @@ class HoljjakScore{
 		scoreBoard = new ArrayList<Boolean>();
 	}
 	
+	// 홀짝 결과 추가
 	public void addResult(boolean result){
 		scoreBoard.add(result);
 	}
 	
+	// 홀짝 결과 출력
 	public void printScoreInfo() {
-		System.out.println(scoreBoard.size()+" 판의 홀짝 정답률은 "+"입니다.");
-	}
-	
-	public double getScorePercent() {
 		int correctCnt = Collections.frequency(scoreBoard, true);
-		return correctCnt/scoreBoard.size()*100;
+		int totalCnt = scoreBoard.size();
+		double correctPercent = (double)correctCnt/(double)totalCnt*100;
+		
+		if(totalCnt != 0) {
+			System.out.println("정답률은 "+String.format("%.1f",correctPercent)+"%("+correctCnt+","+totalCnt+")입니다.");
+		}
 	}
 }
 
