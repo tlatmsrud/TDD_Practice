@@ -1,4 +1,4 @@
-package test.oop9.role8;
+package test.oop9.role9;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class 일급_컬렉션을_사용한다 {
+public class Getter_Setter_Property를_쓰지_않는다 {
 
 	public static void main(String[] args) {
 		Holjjak h = new Holjjak();
@@ -38,14 +38,16 @@ class Holjjak{
 	 * @desc 난수에 대한 홀짝을 추출하고, 입력값과 비교하여 최종 홀짝 여부를 판단한다 
 	 */
 	public boolean holjjakCheck(InputValue inputValue, RandomNumber randomNumber) {
-		int input = inputValue.getInputValue();
-
-		if(input == randomNumber.getHoljjak()) {
-			System.out.println("개수는 "+ randomNumber.getRandomNumber() +"! 맞췄습니다.");
+		boolean inputValueIsHol = inputValue.isHol();
+		boolean randomNumberIsHol = randomNumber.isHol();
+		
+		randomNumber.printRandomNumber();
+		
+		if(inputValueIsHol == randomNumberIsHol) {
+			System.out.println("맞췄습니다.");
 			return true;
 		}
-		
-		System.out.println("개수는 "+ randomNumber.getRandomNumber() +"! 틀렸습니다.");
+		System.out.println("틀렸습니다.");
 		return false;
 	}
 }
@@ -76,8 +78,11 @@ class InputValue{
 		return false;
 	}
 	
-	public int getInputValue() {
-		return inputValue;
+	public boolean isHol() {
+		if(inputValue == 1) {
+			return true;
+		}
+		return false;
 	}
 }
 
@@ -95,19 +100,18 @@ class RandomNumber{
 		Random random = new Random();
 		randomNumber = random.nextInt(9)+1;
 	}
-	
-	// 랜덤 값 조회
-	public int getRandomNumber() {
-		
-		return randomNumber;
+
+	// 홀 여부 확인
+	public boolean isHol() {
+		if(randomNumber % 2 == 1) {
+			return true;
+		}
+		return false;
 	}
 	
-	// 홀/짝 조회
-	public int getHoljjak() {
-		if(randomNumber % 2 == 1) {
-			return 1;
-		}
-		return 2;
+	//
+	public void printRandomNumber() {
+		System.out.println("개수 : "+randomNumber);
 	}
 }
 
@@ -134,9 +138,9 @@ class HoljjakScore{
 		int correctCnt = Collections.frequency(scoreBoard, true);
 		int totalCnt = scoreBoard.size();
 		double correctPercent = (double)correctCnt/(double)totalCnt*100;
-
-        if(totalCnt != 0) {
-			System.out.println("정답률은 "+String.format("%.1f",correctPercent)+"%("+correctCnt+","+totalCnt+")입니다.");
+		
+		if(totalCnt != 0) {
+			System.out.println("정답률은 "+String.format("%.1f",correctPercent)+"%("+correctCnt+"/"+totalCnt+")입니다.");
 		}
 	}
 }
