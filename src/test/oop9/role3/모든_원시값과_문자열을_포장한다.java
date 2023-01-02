@@ -106,3 +106,19 @@ class RandomNumber{
 		return false;
 	}
 }
+
+class CreditScore{
+	
+	int score;
+	
+	public CreditScore(int score) {
+		
+		this.score = score;
+	}
+	
+	public void validationScore(int score){
+		if(score < 0) {
+			throw new RuntimeException("신용점수가 0보다 작습니다.");
+		}
+	}
+}
