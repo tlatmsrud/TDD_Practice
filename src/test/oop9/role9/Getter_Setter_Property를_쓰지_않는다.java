@@ -61,19 +61,26 @@ class InputValue{
 	int inputValue;
 	
 	InputValue(Scanner in){
-		inputValue = in.nextInt();
+		inputValue = InputValueValidationCheck(in);
+	}
+
+	// 입력값에 대한 validation 체크
+	private int InputValueValidationCheck(Scanner in){
+		try {
+			return in.nextInt();
+		}catch(Exception e) {
+			return 3;
+		}
+		
 	}
 	
-	InputValue(int inputValue){
-		this.inputValue = inputValue;
-	}
-		
-	// 입력값 체크
+	// 입력 값에 대한 종료 체크
 	public boolean inputCheck() {
 
 		if(inputValue == 1 || inputValue == 2) {
 			return true;
 		}
+		
 		System.out.println("종료되었습니다.");
 		return false;
 	}
